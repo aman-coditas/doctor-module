@@ -20,7 +20,6 @@ export class DoctorsController {
 
   @MessagePattern('getDoctorByUID')
   getDoctorByUID(@Param('uid') uid: string): Promise<any> {
-    console.log('uid',uid)
     return this.doctorService.getDoctorByUID(uid);
   }
 
