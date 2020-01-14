@@ -8,17 +8,16 @@ const logger = new Logger('Main');
 
 // create microservice options object
 const microserviceOptions = {
-  transport: Transport.TCP,
+  transport: Transport.REDIS,
   options: {
-    host: '127.0.0.1',
-    port: 3001
+    url: 'redis://localhost:6379'
   }
 }
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, microserviceOptions);
   app.listen(() => {
-    logger.log('Doctor microservice is listening on port ' + microserviceOptions.options.port);
+    logger.log('Doctor microservice is listening on port ' + microserviceOptions.options.url);
   })
 }
 bootstrap();
