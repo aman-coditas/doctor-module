@@ -9,8 +9,27 @@ export class DoctorsController {
 
 
   @MessagePattern('getDoctors')
-  getDoctors(): Promise<any> {
-    return this.doctorService.getDoctors();
+  async getDoctors(){
+    let doctorsList =  await this.doctorService.getDoctors();
+   doctorsList['data'] && doctorsList['data'].length > 0 && doctorsList['data'].map(async item=>{
+     const doctorPersonalData = item.profile;
+     doctorPersonalData.address = item.practices[0].visit_address;
+
+     item.practices[0].phones.map(item => {
+       if (item && item.type === 'landline') {
+         doctorPersonalData.phone = item.number;
+       }
+     })
+     doctorPersonalData.firstName = doctorPersonalData.first_name;
+     doctorPersonalData.middleName = doctorPersonalData.middle_name;
+     doctorPersonalData.lastName = doctorPersonalData.last_name;
+     doctorPersonalData.npi = item.npi;
+     doctorPersonalData.imageURL = doctorPersonalData.image_url;
+    //  Add doctor data dump from better doctor api 
+    //  await this.doctorService.saveDoctor(doctorPersonalData);
+
+    })
+    return doctorsList;
   }
 
   @MessagePattern('saveDoctor')
