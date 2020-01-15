@@ -19,12 +19,12 @@ export class DoctorsController {
   }
 
   @MessagePattern('getDoctorByUID')
-  getDoctorByUID(@Param('uid') uid: string): Promise<any> {
+  getDoctorByUID(@Body('uid') uid: string): Promise<any> {
     return this.doctorService.getDoctorByUID(uid);
   }
 
   @MessagePattern('getDoctorByNPI')
-  getDoctorByNPI(@Param('npi') npi: string): Promise<any> {
+  getDoctorByNPI(@Body('npi') npi: string): Promise<any> {
     return this.doctorService.getDoctorByNPI(npi);
   }
 
