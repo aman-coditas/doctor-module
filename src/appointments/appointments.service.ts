@@ -29,7 +29,9 @@ export class AppointmentsService {
     doctorPersonalData.middleName = doctorPersonalData.middle_name;
     doctorPersonalData.lastName = doctorPersonalData.last_name;
     doctorPersonalData.npi = appointment.npi;
-    doctorPersonalData.imageURL = doctorPersonalData.image_url; 
+    doctorPersonalData.imageURL = doctorPersonalData.image_url;
+    doctorPersonalData.lat = doctor.data.practices[0].lat;
+    doctorPersonalData.lon = doctor.data.practices[0].lon;
 
     doctorPersonalData.appointmentStatus = false;
     doctorPersonalData.otp = appointment.OTP;

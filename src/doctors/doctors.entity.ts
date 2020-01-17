@@ -19,6 +19,10 @@ export class Doctors extends BaseEntity {
   imageURL: string;
   @Column('varchar', { length: 20, nullable: true })
   gender: string;
+  @Column('varchar', { length: 200, nullable: true })
+  lat: string;
+  @Column('varchar', { length: 20, nullable: true })
+  lon: string;
   @Column('json', { array: true, nullable: true })
   specialties: Array<{}>;
   @Column('varchar', { length: 20, nullable: true })
