@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { BaseEntity } from '../base.entity';
 
 @Entity('doctors')
@@ -7,13 +13,13 @@ export class Doctors extends BaseEntity {
   firstName: string;
   @Column('varchar', { length: 20, nullable: true })
   middleName: string;
-  @Column('varchar', { length: 20 })
+  @Column('varchar', { length: 20, nullable: true })
   lastName: string;
   @Column('varchar', { length: 20, nullable: true })
   mobileNumber: string;
   @Column('varchar', { length: 50, nullable: true })
   email: string;
-  @Column('varchar', { length: 20, unique: true })
+  @Column('varchar', { length: 20, nullable: true })
   npi: string;
   @Column('varchar', { length: 200, nullable: true })
   imageURL: string;
@@ -25,5 +31,4 @@ export class Doctors extends BaseEntity {
   phone: string;
   // @Column('json', { array: true, nullable: true })
   // address: Array<{}>;
-
 }

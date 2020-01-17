@@ -3,7 +3,12 @@
 const Constants = {
     STATUS: {
         SUCCESS: 'Success',
-        FAILURE: 'Failure'
+        FAILURE: 'Failure',
+        DOCTOR: {
+            SAVED: 'Doctor details saved sucessfully',
+            REGISTER: 'Doctor registered sucessfully',
+            PASSWORD: 'Password saved sucessfully',
+        }
     },
 
     STATUSCODE: {
