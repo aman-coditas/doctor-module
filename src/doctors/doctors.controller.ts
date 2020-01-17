@@ -40,7 +40,7 @@ export class DoctorsController {
 
   @MessagePattern('registerDoctor')
   async registerDoctor(@Body() doctor: Doctors, @Req() req, @Res() res) {
-    const data = this.doctorService.registerDoctor(doctor);
+    const data = await this.doctorService.registerDoctor(doctor);
     return new ResponseBody(Constants.STATUSCODE.SUCCESS, Constants.STATUS.SUCCESS, data);
   }
 
