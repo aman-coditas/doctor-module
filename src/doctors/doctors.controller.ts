@@ -2,39 +2,17 @@ import { Controller, Get, Req, Res, Body, Param } from '@nestjs/common';
 import { DoctorsService } from './doctors.service';
 import { Doctors } from './doctors.entity';
 import { MessagePattern } from '@nestjs/microservices';
+import { ResponseBody } from 'utils/responseBody';
+import { Constants } from 'utils/constants';
 
 @Controller('doctors')
 export class DoctorsController {
-  constructor(private readonly doctorService: DoctorsService) {}
-
+  constructor(private readonly doctorService: DoctorsService) { }
 
   @MessagePattern('getDoctors')
-  async getDoctors(){
-    let doctorsList =  await this.doctorService.getDoctors();
-   doctorsList['data'] && doctorsList['data'].length > 0 && doctorsList['data'].map(async item=>{
-     const doctorPersonalData = item.profile;
-     doctorPersonalData.address = item.practices[0].visit_address;
-
-     item.practices[0].phones.map(item => {
-       if (item && item.type === 'landline') {
-         doctorPersonalData.phone = item.number;
-       }
-     })
-     doctorPersonalData.firstName = doctorPersonalData.first_name;
-     doctorPersonalData.middleName = doctorPersonalData.middle_name;
-     doctorPersonalData.lastName = doctorPersonalData.last_name;
-     doctorPersonalData.npi = item.npi;
-     doctorPersonalData.imageURL = doctorPersonalData.image_url;
-    //  Add doctor data dump from better doctor api 
-    //  await this.doctorService.saveDoctor(doctorPersonalData);
-
-    })
+  async getDoctors() {
+    let doctorsList = await this.doctorService.getDoctors();
     return doctorsList;
-  }
-
-  @MessagePattern('saveDoctor')
-  getPayers(@Body() doctor: Doctors, @Req() req, @Res() res) {
-    return this.doctorService.saveDoctor(doctor);
   }
 
   @MessagePattern('getDoctorByUID')
@@ -52,5 +30,23 @@ export class DoctorsController {
   @MessagePattern('getDoctorsSpecialities')
   getDoctorsSpecialities(): Promise<any> {
     return this.doctorService.getDoctorsSpecialities();
+  }
+
+  @MessagePattern('saveDoctor')
+  async saveDoctor(@Body() doctor: Doctors, @Req() req, @Res() res) {
+    const data = await this.doctorService.saveDoctor(doctor);
+    return new ResponseBody(Constants.STATUSCODE.SUCCESS, Constants.STATUS.SUCCESS, data);
+  }
+
+  @MessagePattern('registerDoctor')
+  async registerDoctor(@Body() doctor: Doctors, @Req() req, @Res() res) {
+    const data = this.doctorService.registerDoctor(doctor);
+    return new ResponseBody(Constants.STATUSCODE.SUCCESS, Constants.STATUS.SUCCESS, data);
+  }
+
+  @MessagePattern('updateDoctor')
+  async updateDoctorDetails(@Body() doctor: Doctors, @Req() req, @Res() res) {
+    const data = await this.doctorService.updateDoctorDetails(doctor);
+    return new ResponseBody(Constants.STATUSCODE.SUCCESS, Constants.STATUS.SUCCESS, data);
   }
 }

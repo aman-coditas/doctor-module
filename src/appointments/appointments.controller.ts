@@ -8,7 +8,7 @@ import { MessagePattern } from '@nestjs/microservices';
 export class AppointmentsController {
   constructor(
     private readonly appiontmentsService: AppointmentsService,
-  ) {}
+  ) { }
 
   @MessagePattern('saveAppointment')
   async saveAppointment(@Body() data) {
